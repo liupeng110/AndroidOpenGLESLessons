@@ -227,7 +227,7 @@ public class LessonTwoRenderer implements GLSurfaceView.Renderer
 				0.0f, -1.0f, 0.0f
 		};
 		
-		// Initialize the buffers.
+		//初始化缓冲数据 
 		mCubePositions = ByteBuffer.allocateDirect(cubePositionData.length * mBytesPerFloat)
         .order(ByteOrder.nativeOrder()).asFloatBuffer();							
 		mCubePositions.put(cubePositionData).position(0);		
@@ -244,32 +244,31 @@ public class LessonTwoRenderer implements GLSurfaceView.Renderer
 	protected String getVertexShader()
 	{
 		 final String vertexShader =
-			"uniform mat4 u_MVPMatrix;      \n"		// A constant representing the combined model/view/projection matrix.
-		  + "uniform mat4 u_MVMatrix;       \n"		// A constant representing the combined model/view matrix.	
-		  + "uniform vec3 u_LightPos;       \n"	    // The position of the light in eye space.
+			"uniform mat4 u_MVPMatrix;      \n"		// 常数表示组合模型/视图/投影矩阵。
+		  + "uniform mat4 u_MVMatrix;       \n"		// 常数表示组合模型/视图矩阵。
+		  + "uniform vec3 u_LightPos;       \n"	    // 光在眼空间中的位置。
 			
-		  + "attribute vec4 a_Position;     \n"		// Per-vertex position information we will pass in.
-		  + "attribute vec4 a_Color;        \n"		// Per-vertex color information we will pass in.
+		  + "attribute vec4 a_Position;     \n"		//每个顶点位置信息
+		  + "attribute vec4 a_Color;        \n"		//每个顶点颜色信息
 		  + "attribute vec3 a_Normal;       \n"		// 每个定点的法线信息
 		  
-		  + "varying vec4 v_Color;          \n"		// This will be passed into the fragment shader.
+		  + "varying vec4 v_Color;          \n"		// 这将被传递到片段着色器。
 		  
-		  + "void main()                    \n" 	// The entry point for our vertex shader.
+		  + "void main()                    \n" 	// 顶点着色器入口点
 		  + "{                              \n"		
-		// Transform the vertex into eye space.
+		// 将顶点变换成眼空间
 		  + "   vec3 modelViewVertex = vec3(u_MVMatrix * a_Position);              \n"
-		// Transform the normal's orientation into eye space.
+		// 将法线方向变换成眼空间
 		  + "   vec3 modelViewNormal = vec3(u_MVMatrix * vec4(a_Normal, 0.0));     \n"
-		// Will be used for attenuation.
+		// 将用于衰减
 		  + "   float distance = length(u_LightPos - modelViewVertex);             \n"
-		// Get a lighting direction vector from the light to the vertex.
+		//从光到顶点得到照明方向矢量
 		  + "   vec3 lightVector = normalize(u_LightPos - modelViewVertex);        \n"
-		// Calculate the dot product of the light vector and vertex normal. If the normal and light vector are
-		// pointing in the same direction then it will get max illumination.
+		// 计算光矢量和顶点法线的点积。如果法线和光矢量是 或指向同一方向，然后将得到最大照明。
 		  + "   float diffuse = max(dot(modelViewNormal, lightVector), 0.1);       \n" 	  		  													  
-		// Attenuate the light based on distance.
+		// 设置基于距离的光衰减
 		  + "   diffuse = diffuse * (1.0 *(1.0 + (0.05 * distance * distance)));  \n"
-		// Multiply the color by the illumination level. It will be interpolated across the triangle.
+		// 乘以颜色的照明水平 将被插值在三角形内
 		  + "   v_Color = a_Color * diffuse;                                       \n" 	 
 		// gl_Position is a special variable used to store the final position.
 		// Multiply the vertex by the matrix to get the final point in normalized screen coordinates.		
@@ -343,7 +342,7 @@ public class LessonTwoRenderer implements GLSurfaceView.Renderer
           + "{                              \n"
           + "   gl_Position = u_MVPMatrix   \n"
           + "               * a_Position;   \n"
-          + "   gl_PointSize = 455.0;         \n"
+          + "   gl_PointSize = 455.0;       \n"//小圆点size
           + "}                              \n";
         
         final String pointFragmentShader = 
