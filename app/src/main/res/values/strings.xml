@@ -24,25 +24,29 @@
     <string name="lesson_six_set_min_filter_message">设置最小过滤器</string>
     <string name="lesson_six_set_mag_filter_message"> 设置过滤器等</string>
     <string-array name="lesson_six_min_filter_types">
-    	<item>GL_NEAREST</item>
-    	<item>GL_LINEAR</item>
-    	<item>GL_NEAREST_MIPMAP_NEAREST</item>
-    	<item>GL_NEAREST_MIPMAP_LINEAR</item>
-    	<item>GL_LINEAR_MIPMAP_NEAREST</item>
-    	<item>GL_LINEAR_MIPMAP_LINEAR</item>
+    	<item>模糊</item>
+    	<item>清晰</item>
+        <item>模式1</item>
+        <item>模式2</item>
+        <item>模式3</item>
+        <item>模式4</item>
+    	<!--<item>GL_NEAREST_MIPMAP_NEAREST</item> -->
+    	<!--<item>GL_NEAREST_MIPMAP_LINEAR</item>-->
+    	<!--<item>GL_LINEAR_MIPMAP_NEAREST</item>-->
+    	<!--<item>GL_LINEAR_MIPMAP_LINEAR</item>-->
     </string-array>
     <string-array name="lesson_six_mag_filter_types">
-    	<item>GL_NEAREST</item>
-    	<item>GL_LINEAR</item>    	
+    	<item>模糊0</item>
+    	<item>清晰0</item>
     </string-array>
     <string name="lesson_seven">7.介绍顶点缓冲对象 Vertex Buffer Objects(VBOs)</string>
     <string name="lesson_seven_subtitle">顶点缓冲对象VBOs拓展</string>
-   	<string name="lesson_seven_increase_cube_count">立方数增加</string>
-   	<string name="lesson_seven_decrease_cube_count">立方数减少</string>
-   	<string name="lesson_seven_using_VBOs">使用 VBOs</string>
-   	<string name="lesson_seven_not_using_VBOs">不使用VBOs</string>
-   	<string name="lesson_seven_using_stride">使用 stride</string>
-   	<string name="lesson_seven_not_using_stride">不使用stride</string>
+   	<string name="lesson_seven_increase_cube_count">立方数+</string>
+   	<string name="lesson_seven_decrease_cube_count">立方数-</string>
+   	<string name="lesson_seven_using_VBOs">VBOs</string>
+   	<string name="lesson_seven_not_using_VBOs">-VBOs</string>
+   	<string name="lesson_seven_using_stride">stride</string>
+   	<string name="lesson_seven_not_using_stride">-stride</string>
    	<string name="lesson_eight">8.介绍IBOs</string>
     <string name="lesson_eight_subtitle">索引缓冲区对象 (IBOs).</string>
    	<string name="lesson_eight_error_could_not_create_vbo">无法创建定点缓冲区对象: %s</string>

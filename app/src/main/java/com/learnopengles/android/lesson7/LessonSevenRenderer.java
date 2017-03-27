@@ -393,7 +393,7 @@ public class LessonSevenRenderer implements GLSurfaceView.Renderer {
 	}
 
 	public void increaseCubeCount() {
-		if (mLastRequestedCubeFactor < 16) {
+		if (mLastRequestedCubeFactor < 50) {
 			generateCubes(++mLastRequestedCubeFactor, false, false);
 		}
 	}	
