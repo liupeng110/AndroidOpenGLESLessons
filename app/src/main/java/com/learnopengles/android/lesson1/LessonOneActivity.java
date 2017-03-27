@@ -7,30 +7,29 @@ import android.content.pm.ConfigurationInfo;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 
-public class LessonOneActivity extends Activity 
+public class LessonOneActivity extends Activity
 {
 	/** Hold a reference to our GLSurfaceView */
 	private GLSurfaceView mGLSurfaceView;
-
+	LessonOneRenderer mOneRenderer;
 	@Override
 	public void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
-		
+
 		mGLSurfaceView = new GLSurfaceView(this);
 
-		// Check if the system supports OpenGL ES 2.0.
+		//检查是否支持opengl2.0
 		final ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
 		final ConfigurationInfo configurationInfo = activityManager.getDeviceConfigurationInfo();
 		final boolean supportsEs2 = configurationInfo.reqGlEsVersion >= 0x20000;
 
-		if (supportsEs2) 
+		if (supportsEs2) //如果支持用2.0的上下文
 		{
-			// Request an OpenGL ES 2.0 compatible context.
-			mGLSurfaceView.setEGLContextClientVersion(2);
 
-			// Set the renderer to our demo renderer, defined below.
-			mGLSurfaceView.setRenderer(new LessonOneRenderer());
+			mGLSurfaceView.setEGLContextClientVersion(2);
+			mOneRenderer =new LessonOneRenderer();
+			mGLSurfaceView.setRenderer(mOneRenderer);              //设置自定义渲染器
 		} 
 		else 
 		{
@@ -45,16 +44,16 @@ public class LessonOneActivity extends Activity
 	@Override
 	protected void onResume() 
 	{
-		// The activity must call the GL surface view's onResume() on activity onResume().
 		super.onResume();
-		mGLSurfaceView.onResume();
+		mGLSurfaceView.onResume();//必须在activity的onResume()中调用GL surface view 的onResume()
 	}
 
 	@Override
 	protected void onPause() 
 	{
-		// The activity must call the GL surface view's onPause() on activity onPause().
 		super.onPause();
 		mGLSurfaceView.onPause();
-	}	
+	}
+
+
 }
