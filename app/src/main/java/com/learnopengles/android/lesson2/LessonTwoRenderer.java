@@ -173,7 +173,7 @@ public class LessonTwoRenderer implements GLSurfaceView.Renderer
 		};
 		
 		// X, Y, Z
-		// The normal is used in light calculations and is a vector which points
+		// 正常用于光计算，是一个向量点
 		// orthogonal to the plane of the surface. For a cube model, the normals
 		// should be orthogonal to the points of each face.
 		final float[] cubeNormalData =
@@ -227,7 +227,7 @@ public class LessonTwoRenderer implements GLSurfaceView.Renderer
 				0.0f, -1.0f, 0.0f
 		};
 		
-		//初始化缓冲数据 
+		//初始化缓冲数据
 		mCubePositions = ByteBuffer.allocateDirect(cubePositionData.length * mBytesPerFloat)
         .order(ByteOrder.nativeOrder()).asFloatBuffer();							
 		mCubePositions.put(cubePositionData).position(0);		
