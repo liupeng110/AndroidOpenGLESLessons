@@ -9,9 +9,7 @@ import android.os.Bundle;
 
 public class LessonTwoActivity extends Activity 
 {
-	/** Hold a reference to our GLSurfaceView */
-	private GLSurfaceView mGLSurfaceView;
-
+	private GLSurfaceView mGLSurfaceView;//持有一个GLSurfaceView引用
 	@Override
 	public void onCreate(Bundle savedInstanceState) 
 	{
