@@ -10,8 +10,7 @@ import android.os.Bundle;
 public class LessonTwoActivity extends Activity 
 {
 	private GLSurfaceView mGLSurfaceView;//持有一个GLSurfaceView引用
-	@Override
-	public void onCreate(Bundle savedInstanceState) 
+	@Override public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		mGLSurfaceView = new GLSurfaceView(this);

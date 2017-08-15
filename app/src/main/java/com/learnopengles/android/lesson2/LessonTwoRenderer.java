@@ -18,10 +18,10 @@ public class LessonTwoRenderer implements GLSurfaceView.Renderer
 {
 
 	private static final String TAG = "LessonTwoRenderer";
-	private float[] mModelMatrix = new float[16];
-	private float[] mViewMatrix = new float[16];
-	private float[] mProjectionMatrix = new float[16];//mvp矩阵
-	private float[] mMVPMatrix = new float[16];
+	private float[] mModelMatrix = new float[16];     //模型矩阵
+	private float[] mViewMatrix = new float[16];      //view矩阵
+	private float[] mProjectionMatrix = new float[16];//投影矩阵
+	private float[] mMVPMatrix = new float[16];       //
 	
 
 	private float[] mLightModelMatrix = new float[16];
@@ -32,7 +32,7 @@ public class LessonTwoRenderer implements GLSurfaceView.Renderer
 	private int mMVPMatrixHandle;
 	private int mMVMatrixHandle;
 	private int mLightPosHandle;
-	private int mPositionHandle;
+	private int mPositionHandle;//声明顶点位置属性引用
 	private int mColorHandle;
 	private int mNormalHandle;
 	private final int mBytesPerFloat = 4;
@@ -63,7 +63,7 @@ public class LessonTwoRenderer implements GLSurfaceView.Renderer
 	{	
 		// Define points for a cube.		
 		
-		// X, Y, Z
+		// X, Y, Z  立方体位置坐标
 		final float[] cubePositionData =
 		{
 				// In OpenGL counter-clockwise winding is default. This means that when we look at a triangle, 
@@ -120,7 +120,7 @@ public class LessonTwoRenderer implements GLSurfaceView.Renderer
 				-1.0f, -1.0f, -1.0f,
 		};	
 		
-		// R, G, B, A
+		// R, G, B, A   立方体颜色数据
 		final float[] cubeColorData =
 		{				
 				// Front face (red)
@@ -172,68 +172,68 @@ public class LessonTwoRenderer implements GLSurfaceView.Renderer
 				1.0f, 0.0f, 1.0f, 1.0f
 		};
 		
-		// X, Y, Z
+		// X, Y, Z    法线数据
 		// 正常用于光计算，是一个向量点
-		// orthogonal to the plane of the surface. For a cube model, the normals
-		// should be orthogonal to the points of each face.
+		// orthogonal to the plane of the surface. For a cube model, the normals should be orthogonal to the points of each face.
+		//对表面的平面正交。对于多维数据集模型，法线应该与每个面的点正交
 		final float[] cubeNormalData =
-		{												
+		{
 				// Front face
-				0.0f, 0.0f, 1.0f,				
 				0.0f, 0.0f, 1.0f,
 				0.0f, 0.0f, 1.0f,
-				0.0f, 0.0f, 1.0f,				
 				0.0f, 0.0f, 1.0f,
 				0.0f, 0.0f, 1.0f,
-				
-				// Right face 
-				1.0f, 0.0f, 0.0f,				
+				0.0f, 0.0f, 1.0f,
+				0.0f, 0.0f, 1.0f,
+
+				// Right face
 				1.0f, 0.0f, 0.0f,
 				1.0f, 0.0f, 0.0f,
-				1.0f, 0.0f, 0.0f,				
 				1.0f, 0.0f, 0.0f,
 				1.0f, 0.0f, 0.0f,
-				
-				// Back face 
-				0.0f, 0.0f, -1.0f,				
+				1.0f, 0.0f, 0.0f,
+				1.0f, 0.0f, 0.0f,
+
+				// Back face
 				0.0f, 0.0f, -1.0f,
 				0.0f, 0.0f, -1.0f,
-				0.0f, 0.0f, -1.0f,				
 				0.0f, 0.0f, -1.0f,
 				0.0f, 0.0f, -1.0f,
-				
-				// Left face 
-				-1.0f, 0.0f, 0.0f,				
+				0.0f, 0.0f, -1.0f,
+				0.0f, 0.0f, -1.0f,
+
+				// Left face
 				-1.0f, 0.0f, 0.0f,
 				-1.0f, 0.0f, 0.0f,
-				-1.0f, 0.0f, 0.0f,				
 				-1.0f, 0.0f, 0.0f,
 				-1.0f, 0.0f, 0.0f,
-				
-				// Top face 
-				0.0f, 1.0f, 0.0f,			
+				-1.0f, 0.0f, 0.0f,
+				-1.0f, 0.0f, 0.0f,
+
+				// Top face
 				0.0f, 1.0f, 0.0f,
 				0.0f, 1.0f, 0.0f,
-				0.0f, 1.0f, 0.0f,				
 				0.0f, 1.0f, 0.0f,
 				0.0f, 1.0f, 0.0f,
-				
-				// Bottom face 
-				0.0f, -1.0f, 0.0f,			
+				0.0f, 1.0f, 0.0f,
+				0.0f, 1.0f, 0.0f,
+
+				// Bottom face
 				0.0f, -1.0f, 0.0f,
 				0.0f, -1.0f, 0.0f,
-				0.0f, -1.0f, 0.0f,				
+				0.0f, -1.0f, 0.0f,
+				0.0f, -1.0f, 0.0f,
 				0.0f, -1.0f, 0.0f,
 				0.0f, -1.0f, 0.0f
 		};
 		
 		//初始化缓冲数据
 		mCubePositions = ByteBuffer.allocateDirect(cubePositionData.length * mBytesPerFloat)
-        .order(ByteOrder.nativeOrder()).asFloatBuffer();							
-		mCubePositions.put(cubePositionData).position(0);		
+        .order(ByteOrder.nativeOrder()).asFloatBuffer(); //设置字节顺序为本地操作系统顺序
+		mCubePositions.put(cubePositionData).position(0);//将数组中的顶点数据送入缓冲
 		
 		mCubeColors = ByteBuffer.allocateDirect(cubeColorData.length * mBytesPerFloat)
-        .order(ByteOrder.nativeOrder()).asFloatBuffer();							
+        .order(ByteOrder.nativeOrder()).asFloatBuffer();
 		mCubeColors.put(cubeColorData).position(0);
 		
 		mCubeNormals = ByteBuffer.allocateDirect(cubeNormalData.length * mBytesPerFloat)
@@ -244,9 +244,9 @@ public class LessonTwoRenderer implements GLSurfaceView.Renderer
 	protected String getVertexShader()
 	{
 		 final String vertexShader =
-			"uniform mat4 u_MVPMatrix;      \n"		// 常数表示组合模型/视图/投影矩阵。
+			"uniform mat4 u_MVPMatrix;      \n"		// 总变换矩阵
 		  + "uniform mat4 u_MVMatrix;       \n"		// 常数表示组合模型/视图矩阵。
-		  + "uniform vec3 u_LightPos;       \n"	    // 光在眼空间中的位置。
+		  + "uniform vec3 u_LightPos;       \n"	    // 光在眼空间中的位置。 向量
 
 		  + "attribute vec4 a_Position;     \n"		//每个顶点位置信息
 		  + "attribute vec4 a_Color;        \n"		//每个顶点颜色信息
@@ -255,16 +255,16 @@ public class LessonTwoRenderer implements GLSurfaceView.Renderer
 		  + "varying vec4 v_Color;          \n"		// 这将被传递到片段着色器。
 		  + "void main()                    \n" 	// 顶点着色器入口点
 		  + "{                              \n"
-		  + "   vec3 modelViewVertex = vec3(u_MVMatrix * a_Position);              \n"// 将顶点变换成眼空间
+		  + "   vec3 modelViewVertex = vec3(u_MVMatrix * a_Position);              \n"// 将顶点变换成眼空间  向量
 		  + "   vec3 modelViewNormal = vec3(u_MVMatrix * vec4(a_Normal, 0.0));     \n"// 将法线方向变换成眼空间
 		  + "   float distance = length(u_LightPos - modelViewVertex);             \n"// 将用于衰减
 		  + "   vec3 lightVector = normalize(u_LightPos - modelViewVertex);        \n"//从光到顶点得到照明方向矢量
 		  + "   float diffuse = max(dot(modelViewNormal, lightVector), 0.1);       \n"// 计算光矢量和顶点法线的点积。如果法线和光矢量是 或指向同一方向，然后将得到最大照明。
-		  + "   diffuse = diffuse * (1.0 *(1.0 + (0.05 * distance * distance)));  \n"//设置基于距离的光衰减
+		  + "   diffuse = diffuse *  (1.0 + (0.05 * distance * distance) );        \n"//设置基于距离的光衰减
 		  + "   v_Color = a_Color * diffuse;                                       \n"//乘以颜色的照明水平 将被插值在三角形内
 		  + "   gl_Position = u_MVPMatrix * a_Position;                            \n"  //gl_position是用来存储最终位置特殊的变量。
 		  + "}                                                                     \n"; //矩阵相乘的顶点by the the normalized to get the终点在屏幕坐标
-		
+
 		return vertexShader;
 	}
 	
@@ -319,31 +319,28 @@ public class LessonTwoRenderer implements GLSurfaceView.Renderer
         
 
         final String pointVertexShader =    //为我们的点定义一个简单的着色器程序。
-        	"uniform mat4 u_MVPMatrix;      \n"
-          +	"attribute vec4 a_Position;     \n"		
-          + "void main()                    \n"
-          + "{                              \n"
-          + "   gl_Position = u_MVPMatrix   \n"
-          + "               * a_Position;   \n"
-          + "   gl_PointSize = 455.0;       \n"//小圆点size
-          + "}                              \n";
+        	"uniform mat4 u_MVPMatrix;                     \n"
+          +	"attribute vec4 a_Position;                    \n"
+          + "void main()                                   \n"
+          + "{                                             \n"
+          + "   gl_Position = u_MVPMatrix * a_Position;    \n"
+          + "   gl_PointSize = 55.0;                       \n"//小圆点size
+          + "}                                             \n";
         
         final String pointFragmentShader = 
-        	"precision mediump float;       \n"					          
-          + "void main()                    \n"
-          + "{                              \n"
-          + "   gl_FragColor = vec4(1.0,    \n" //片段颜色
-          + "   1.0, 1.0, 1.0);             \n"
-          + "}                              \n";
-        
-        final int pointVertexShaderHandle = compileShader(GLES20.GL_VERTEX_SHADER, pointVertexShader);
+        	"precision mediump float;                   \n"
+          + "void main()                                \n"
+          + "{                                          \n"
+          + "  gl_FragColor = vec4(0.5,0.5,0.5, 1.0);   \n"//光源点 颜色
+          + "}                                          \n";
+
+        final int pointVertexShaderHandle   = compileShader(GLES20.GL_VERTEX_SHADER, pointVertexShader);
         final int pointFragmentShaderHandle = compileShader(GLES20.GL_FRAGMENT_SHADER, pointFragmentShader);
         mPointProgramHandle = createAndLinkProgram(pointVertexShaderHandle, pointFragmentShaderHandle, 
         		new String[] {"a_Position"});                 
 	}	
 		
-	@Override
-	public void onSurfaceChanged(GL10 glUnused, int width, int height) 
+	@Override public void onSurfaceChanged(GL10 glUnused, int width, int height)
 	{
 		GLES20.glViewport(0, 0, width, height);//将OpenGL视口设置为与表面相同的大小。
 
@@ -354,7 +351,7 @@ public class LessonTwoRenderer implements GLSurfaceView.Renderer
 		final float bottom = -1.0f;
 		final float top = 1.0f;
 		final float near = 1.0f;
-		final float far = 10.0f;
+		final float far = 25.0f;
 		
 		Matrix.frustumM(mProjectionMatrix, 0, left, right, bottom, top, near, far);//光锥
 	}	
@@ -369,13 +366,13 @@ public class LessonTwoRenderer implements GLSurfaceView.Renderer
         
         // 立方体绘制设置程序句柄
         mMVPMatrixHandle = GLES20.glGetUniformLocation(mPerVertexProgramHandle, "u_MVPMatrix");
-        mMVMatrixHandle = GLES20.glGetUniformLocation(mPerVertexProgramHandle, "u_MVMatrix"); 
-        mLightPosHandle = GLES20.glGetUniformLocation(mPerVertexProgramHandle, "u_LightPos");
-        mPositionHandle = GLES20.glGetAttribLocation(mPerVertexProgramHandle, "a_Position");
-        mColorHandle = GLES20.glGetAttribLocation(mPerVertexProgramHandle, "a_Color");
-        mNormalHandle = GLES20.glGetAttribLocation(mPerVertexProgramHandle, "a_Normal"); 
+        mMVMatrixHandle  = GLES20.glGetUniformLocation(mPerVertexProgramHandle, "u_MVMatrix");
+        mLightPosHandle  = GLES20.glGetUniformLocation(mPerVertexProgramHandle, "u_LightPos");//填入的光源位置 坐标
+        mPositionHandle  = GLES20.glGetAttribLocation(mPerVertexProgramHandle, "a_Position"); //获取顶点位置属性引用的值
+        mColorHandle     = GLES20.glGetAttribLocation(mPerVertexProgramHandle, "a_Color");
+        mNormalHandle    = GLES20.glGetAttribLocation(mPerVertexProgramHandle, "a_Normal");
         
-        // 计算光的位置。旋转然后推入距离。
+        // 计算光的位置。旋转然后推入距离
         Matrix.setIdentityM(mLightModelMatrix, 0);
         Matrix.translateM(mLightModelMatrix, 0, 0.0f, 0.0f, -5.0f);      
         Matrix.rotateM(mLightModelMatrix, 0, angleInDegrees, 0.0f, 1.0f, 0.0f);
@@ -389,25 +386,25 @@ public class LessonTwoRenderer implements GLSurfaceView.Renderer
         Matrix.translateM(mModelMatrix, 0, 4.0f, 0.0f, -7.0f);
         Matrix.rotateM(mModelMatrix, 0, angleInDegrees, 1.0f, 0.0f, 0.0f);        
         drawCube();
-                        
-        Matrix.setIdentityM(mModelMatrix, 0);
-        Matrix.translateM(mModelMatrix, 0, -4.0f, 0.0f, -7.0f);
-        Matrix.rotateM(mModelMatrix, 0, angleInDegrees, 0.0f, 1.0f, 0.0f);        
-        drawCube();
-        
-        Matrix.setIdentityM(mModelMatrix, 0);
-        Matrix.translateM(mModelMatrix, 0, 0.0f, 4.0f, -7.0f);
-        Matrix.rotateM(mModelMatrix, 0, angleInDegrees, 0.0f, 0.0f, 1.0f);        
-        drawCube();
-        
-        Matrix.setIdentityM(mModelMatrix, 0);
-        Matrix.translateM(mModelMatrix, 0, 0.0f, -4.0f, -7.0f);
-        drawCube();
-        
-        Matrix.setIdentityM(mModelMatrix, 0);
-        Matrix.translateM(mModelMatrix, 0, 0.0f, 0.0f, -5.0f);
-        Matrix.rotateM(mModelMatrix, 0, angleInDegrees, 1.0f, 1.0f, 0.0f);        
-        drawCube();
+
+//        Matrix.setIdentityM(mModelMatrix, 0);
+//        Matrix.translateM(mModelMatrix, 0, -4.0f, 0.0f, -7.0f);
+//        Matrix.rotateM(mModelMatrix, 0, angleInDegrees, 0.0f, 1.0f, 0.0f);
+//        drawCube();
+//
+//        Matrix.setIdentityM(mModelMatrix, 0);
+//        Matrix.translateM(mModelMatrix, 0, 0.0f, 4.0f, -7.0f);
+//        Matrix.rotateM(mModelMatrix, 0, angleInDegrees, 0.0f, 0.0f, 1.0f);
+//        drawCube();
+//
+//        Matrix.setIdentityM(mModelMatrix, 0);
+//        Matrix.translateM(mModelMatrix, 0, 0.0f, -4.0f, -7.0f);
+//        drawCube();
+//
+//        Matrix.setIdentityM(mModelMatrix, 0);
+//        Matrix.translateM(mModelMatrix, 0, 0.0f, 0.0f, -5.0f);
+//        Matrix.rotateM(mModelMatrix, 0, angleInDegrees, 1.0f, 1.0f, 0.0f);
+//        drawCube();
 
         GLES20.glUseProgram(mPointProgramHandle); //画点指示灯
         drawLight();
@@ -415,9 +412,15 @@ public class LessonTwoRenderer implements GLSurfaceView.Renderer
 
 	private void drawCube()//绘制立方体
 	{
-		mCubePositions.position(0);		//传递位置信息
-        GLES20.glVertexAttribPointer(mPositionHandle, mPositionDataSize, GLES20.GL_FLOAT, false, 0, mCubePositions);
-        GLES20.glEnableVertexAttribArray(mPositionHandle);
+		mCubePositions.position(0);	//传递位置信息
+        GLES20.glVertexAttribPointer(
+        		mPositionHandle,   //顶点位置属性引用
+				3,                 //每顶点一组的数据个数(这里是xyz因此为3)
+				GLES20.GL_FLOAT,   //数据类型
+				false, 0,          //是否规格化
+				mCubePositions);   //存放了数据的缓冲
+        GLES20.glEnableVertexAttribArray(mPositionHandle);//启用顶点位置数据
+
         mCubeColors.position(0);        //传递颜色信息
         GLES20.glVertexAttribPointer(mColorHandle, mColorDataSize, GLES20.GL_FLOAT, false, 0, mCubeColors);
         GLES20.glEnableVertexAttribArray(mColorHandle);
